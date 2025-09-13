@@ -1,2 +1,2 @@
 #!/bin/bash
-python ./hello.py
+python3 ./hello.py

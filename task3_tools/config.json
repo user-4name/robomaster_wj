@@ -1,0 +1,6 @@
+{
+  "robot_name": "sentry_01",
+  "health": 100,
+  "ammo": 250,
+  "enabled_modules": ["vision", "can_bus"]
+}
