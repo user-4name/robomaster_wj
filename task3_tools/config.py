@@ -17,7 +17,7 @@ try:
     print("ammo：", config_data["ammo"])
     print("enabled modules：", ", ".join(config_data["enabled_modules"]))
 
-#the following content came from AI
+#the following content is from AI
 except FileNotFoundError: 
     print(f"文件 {config_path} 不存在")
 except json.JSONDecodeError:
