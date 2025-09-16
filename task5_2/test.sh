@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 locate_rune.py
+python3 locate.py

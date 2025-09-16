@@ -26,7 +26,7 @@ def find_path(map_data, start_x, start_y, goal_x, goal_y):
         or goal_y >= cols
         or map_data[goal_x][goal_y] == '1'
     ):
-        return f"I can't go to the postion ({goal_x},{goal_y})."
+        return 0
 
     visited = [[False for _ in range(cols)] for _ in range(rows)]
     parent = [[(-1, -1) for _ in range(cols)] for _ in range(rows)]
@@ -58,7 +58,7 @@ def find_path(map_data, start_x, start_y, goal_x, goal_y):
                 parent[nx][ny] = (x, y)
 
     if not found:
-        return f"I can't go to the postion ({goal_x},{goal_y})."
+        return 0
 
     path = []
     x, y = goal_x, goal_y
@@ -78,9 +78,6 @@ def print_map(map_data):
         print(''.join(row))
 
 if __name__ == "__main__":
-    if len(sys.argv) != 6:
-        print("Usage: python your_program_name.py <map_file_path> <start_x> <start_y> <goal_x> <goal_y>")
-        sys.exit(1)
 
     map_file = sys.argv[1]
     start_x = int(sys.argv[2])
@@ -91,7 +88,7 @@ if __name__ == "__main__":
     map_data = read_map(map_file)
     result = find_path(map_data, start_x, start_y, goal_x, goal_y)
 
-    if isinstance(result, str):
-        print(result)
+    if result==0:
+        print(f"I can't go to the postion ({goal_x},{goal_y}).")
     else:
-        print_map(result)
+        print_map("ok")

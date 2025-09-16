@@ -17,9 +17,8 @@ def calculate_yd(contour):
     perimeter = cv2.arcLength(contour, True)    
     if perimeter == 0:
         return 0
-    
-    #圆度
-    yd = 4 * np.pi * area / (perimeter * perimeter)
+        
+    yd = 4 * np.pi * area / (perimeter * perimeter)#圆度
     return yd
 
 def locate(image_path):
@@ -33,13 +32,11 @@ def locate(image_path):
     
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     a, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
-    
-    #找轮廓
     contours, b = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
     fit_yd = 0
     best_contour = None
-    best_bbox = None
+    box = None
     
     for i, contour in enumerate(contours):
         area = cv2.contourArea(contour)
@@ -49,15 +46,15 @@ def locate(image_path):
         x, y, w, h = cv2.boundingRect(contour)
         
         print(f"轮廓 {i}: 面积={area:.2f}, 圆度={circularity:.3f}, 位置=({x},{y})")
-        
+        #更新
         if circularity > fit_yd:
             fit_yd = circularity
             best_contour = contour
-            best_bbox = (x, y, w, h)
+            box = (x, y, w, h)
     
     if best_contour is not None:
-        print(f"最圆的轮廓: 圆度wei{fit_yd:.3f}")
-        x, y, w, h = best_bbox
+        print(f"最圆的轮廓， 圆度wei{fit_yd:.3f}")
+        x, y, w, h = box
         cv2.rectangle(result_image, (x, y), (x + w, y + h), (0, 255, 0), 2)       
         cv2.drawContours(result_image, [best_contour], -1, (255, 0, 0), 2)        
         print(f"矩形框位置: x={x}, y={y}, width={w}, height={h}")
@@ -69,7 +66,6 @@ def locate(image_path):
     cv2.imshow('Original Image', image)
     cv2.imshow('Binary Image', binary)
     cv2.imshow('Detected Rune', result_image)
-    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
